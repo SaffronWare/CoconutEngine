@@ -1,4 +1,8 @@
 #pragma once
+#include <glfw3.h>
+#include <vector>
+
+
 
 namespace Coco
 {
@@ -11,15 +15,20 @@ namespace Coco
 
 	struct MouseEvent : public Event
 	{
-		enum class MouseEventAction {LEFT_PRESS,LEFT_RELEASE, LEFT_HELD, LEFT_RELEASED, RIGHT_PRESS, RIGHT_RELEASE};
+		enum class MouseEventAction {LEFT_PRESS, LEFT_HELD, RIGHT_PRESS, RIGHT_HELD,  CURSOR_MOVED};
 
 		MouseEventAction action;
-		int x; int y;
+		double ox;
+		double oy;
+		double x;
+		double y;
 
 
-		MouseEvent(int x, int y, MouseEventAction action) : 
+		MouseEvent(double x, double y, double ox, double oy, MouseEventAction action) : 
 			x(x), 
-			y(y), 
+			y(y),
+			ox(ox),
+			oy(oy),
 			action(action)
 		{
 			type = EventType::MouseEvent;
@@ -31,9 +40,9 @@ namespace Coco
 		enum class KeyEventAction {KEY_PRESS, KEY_RELEASE, KEY_HELD};
 
 		KeyEventAction action;
-		const char* key;
+		int key;
 
-		KeyEvent(const char* key, KeyEventAction action) :
+		KeyEvent(int key, KeyEventAction action) :
 			action(action),
 			key(key)
 		{
